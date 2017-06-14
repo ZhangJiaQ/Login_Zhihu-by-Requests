@@ -27,8 +27,9 @@ def is_login():
 
 
 def get_captcha():
+    #获取验证码图片
     import time
-    t = str(int(time.time()*1000))
+    t = str(int(time.time()*1000))#随机数字添加到captcha_url里
     captcha_url = "https://www.zhihu.com/captcha.gif?r={0}&type=login".format(t)
     t = session.get(captcha_url,headers=header)
     with open("captcha.jpg","wb") as f:
@@ -55,13 +56,14 @@ def get_xsrf():
 
 
 def get_index():
+    #获取登陆后的页面
     response = session.get("https://www.zhihu.com",headers=header)
     with open("index_page.html","wb") as f:
         f.write(response.text.encode("utf-8"))
     print("OK")
 
 def zhihu_login(account,password):
-
+    #登录知乎
     if re.match(r'1\d{10}',account):
         #
         print ('phone login')
@@ -86,6 +88,6 @@ def zhihu_login(account,password):
     session.cookies.save()
 
 
-zhihu_login("182*******5","z*******zz")# account and password
+zhihu_login("182*******5","z*******zz")# 账户和密码
 print(is_login())
 get_index()

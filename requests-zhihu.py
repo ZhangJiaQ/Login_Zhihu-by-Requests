@@ -51,8 +51,8 @@ def get_xsrf():
     # 获取xsrf code
     response = session.get('https://www.zhihu.com',headers=header)
     re_text = response.text
-    re_obj = re.findall(r'.* value="(.*?)"',re_text)
-    return re_obj[0]
+    re_obj = re.match(r'.* value="(.*?)"',re_text,re.DOTALL)
+    return re_obj.group(1)
 
 
 def get_index():
